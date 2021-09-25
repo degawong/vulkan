@@ -47,8 +47,3 @@ jobs:
       run: |
         cp .\workspace\hello_world.spv build-x86\vulkan_test
         ctest --test-dir build-x86 -j6 --output-on-failure --extra-verbose
-    - name: test-x64
-      working-directory: ${{github.workspace}}
-      run: |
-        cp .\workspace\hello_world.spv build-x64\vulkan_test
-        ctest --test-dir build-x64 -j6 --output-on-failure --extra-verbose
