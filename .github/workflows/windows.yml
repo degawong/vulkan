@@ -30,15 +30,16 @@ jobs:
       run: |
         Invoke-WebRequest -Uri https://sdk.lunarg.com/sdk/download/1.2.189.2/windows/VulkanSDK-1.2.189.2-Installer.exe?Human=true -OutFile VulkanSDK-1.2.189.2-Installer.exe
         7z x -aoa ./VulkanSDK-1.2.189.2-Installer.exe -oVulkanSDK
-        Remove-Item .\VulkanSDK\Demos, .\VulkanSDK\glslang, .\VulkanSDK\Samples, .\VulkanSDK\shaderc, .\VulkanSDK\spirv-tools, .\VulkanSDK\Third-Party, .\VulkanSDK\Tools, .\VulkanSDK\Tools32 -Recurse
     - name: build-x86
       working-directory: ${{github.workspace}}
       run: |
+        $env:VULKAN_SDK="$(pwd)/VulkanSDK"
         cmake $env:GITHUB_WORKSPACE -T v142,host=x64 -A Win32 -B build-x86
         cmake --build build-x86 --config $env:CONFIG -j 2
     - name: build-x64
       working-directory: ${{github.workspace}}
       run: |
+        $env:VULKAN_SDK="$(pwd)/VulkanSDK"
         cmake $env:GITHUB_WORKSPACE -B build-x64
         cmake --build build-x64 --config $env:CONFIG -j 2
     - name: test-x86
